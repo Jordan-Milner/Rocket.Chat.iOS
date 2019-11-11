@@ -9,6 +9,7 @@
 import UIKit
 import RealmSwift
 import UserNotifications
+import Pendo
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -40,12 +41,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 WindowManager.open(.auth(serverUrl: "", credentials: nil), viewControllerIdentifier: "ConnectServerNav")
             }
         }
+        
+        let initParams = PendoInitParams()
+        initParams.visitorId = "John Smith"
+        initParams.visitorData = ["Age": "27", "Country": "USA", "Gender": "Male"]
+        initParams.accountId = "Acme"
+        initParams.accountData = ["Tier": "1", "Timezone": "EST", "Size": "Enterprise"]
+        
+        
+        PendoManager.shared().initSDK(
+            "eyJhbGciOiJSUzI1NiIsImtpZCI6IiIsInR5cCI6IkpXVCJ9.eyJkYXRhY2VudGVyIjoidXMiLCJrZXkiOiI0YzZhMGU5NWQwNjI0YjA4ZjYxZGRlY2RhNmM1ZjczNTYyODRmMzZlYTdlOGJmYzExYTU2Zjc5OWE0MGI1MmY1MDQ4Y2UwMWRkMWQ2OWY4N2FjNzNmODNkYWFjODVlNWZlY2EzYTA2ZTI5ZDMzZTMzNzU3NTRlYjE4ODc0YjA1YS42MGMxMzkxNTM3ODA3MDIxYWNmOTg3YmRhN2I2NzFlMC40MjI2M2RhNGJjMjMxZjNmZGU3MmUwMjI4NGM3ZTYxMzk2OTE1MDg3M2JhZThhOGZiY2IwMzI2ZmQ5MTEzY2VhIn0.U0oFTIlAQBUiofP4KUpPSXDCHHD38zGsgviOyTiTg-VIts899aI_yQ8_9rAw1x6dfZ64JpkJzR9GVNryTrk_47QOjjgtg-YMqy7WvHzAp1sgwXKgQb1rR5UP7ECNzggO7TYu8Z-2bXhjkPnULhDh3_Rszg9f4kn64sBV7XvJdcw",
+            initParams: initParams) // call initSDK with initParams as a 2nd parameter.
 
         initNotificationWindow()
 
         return true
     }
-
+    
     func initNotificationWindow() {
         notificationWindow = TransparentToTouchesWindow(frame: UIScreen.main.bounds)
         notificationWindow?.rootViewController = NotificationViewController.shared
@@ -94,6 +106,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+        if url.scheme?.range(of: "pendo") != nil {
+            PendoManager.shared().initWith(url)
+            
+            return true
+        }
         if AppManager.handleDeepLink(url) != nil {
             return true
         }

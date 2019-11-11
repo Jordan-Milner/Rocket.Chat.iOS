@@ -220,6 +220,16 @@
 				<string>com.googleusercontent.apps.673693445664-dumairnsk1sbkca5nmsq2b5kdglqpc0a</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>Mike Farrell</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>pendo-2b649c25</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>258</string>

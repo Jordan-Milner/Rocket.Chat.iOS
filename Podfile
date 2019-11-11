@@ -4,6 +4,8 @@ platform :ios, '11.0'
 use_frameworks!
 inhibit_all_warnings!
 
+pod 'Pendo', '~> 2.1.0'
+
 def database_pods
   pod 'RealmSwift'
   pod 'SwiftyJSON'

@@ -101,7 +101,7 @@ public class HintsView: UITableView {
      Shared initialization procedures.
      */
     private func commonInit() {
-        NotificationCenter.default.addObserver(forName: .UIContentSizeCategoryDidChange, object: nil, queue: nil, using: { [weak self] _ in
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.UIContentSizeCategoryDidChange, object: nil, queue: nil, using: { [weak self] _ in
             self?.beginUpdates()
             self?.endUpdates()
         })
